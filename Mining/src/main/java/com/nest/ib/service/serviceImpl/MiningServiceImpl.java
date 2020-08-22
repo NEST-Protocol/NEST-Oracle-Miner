@@ -354,7 +354,7 @@ public class MiningServiceImpl implements MiningService {
      */
     public static BigDecimal getExchangePrice() {
         if (HUOBI_API == null) {
-            LOG.error("The fire coin API failed to initialize, and ERC20's Symbol failed to obtain");
+            LOG.error("The Huobi API failed to initialize, and ERC20's Symbol failed to obtain");
             return null;
         }
 
