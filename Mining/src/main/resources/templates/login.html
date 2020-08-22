@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>The user login</title>
+</head>
+<body class="bk">
+<div style="text-align: center">
+    <form id="login" action="/auth/verify" method="post">
+        <label>user name: </label>
+        <input type="text" name="userName">
+        <label>password: </label>
+        <input type="password" name="passwd">
+        <input type="submit" value="login"/>
+    </form>
+
+</div>
+</body>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
+
+<style type="text/css">
+    .bk{
+        background-color: cadetblue;
+        background-size: 100% 100%;
+    }
+</style>
+</html>
+
