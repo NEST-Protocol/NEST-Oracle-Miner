@@ -141,7 +141,7 @@ if (approveValue.compareTo(new BigInteger("100000000000000")) <= 0) {
 
 ```java
 if (HUOBI_API == null) {
-    LOG.error("火币API没有初始化成功，ERC20的symbol获取失败");
+    LOG.error("The fire coin API failed to initialize, and ERC20's Symbol failed to obtain");
     return null;
 }
 String s = HttpClientUtil.sendHttpGet(HUOBI_API);
