@@ -8,7 +8,7 @@
 
 #####  1. Create private key, node
 
->Since calling the contract to obtain relevant data and send transactions, you need to interact with the chain, and you need to prepare an Ethereum node URL and private key. The node can apply for free after registration through https://infura.io/.
+>Since calling the contract to obtain relevant data and send transactions, you need to interact with the chain, and you need to prepare an Ethereum node URL and private key. The node can apply for free after registration through https://infura.io/ or https://quiknode.io/.
 >
 >The assets after quotation need to be retrieved by triggering the contract. Currently, the quotation contract of the account is directly obtained through the contract find interface for retrieval operation.
 
