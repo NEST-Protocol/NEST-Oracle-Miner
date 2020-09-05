@@ -27,7 +27,8 @@ You must have:
 #### Startup and shutdown
 
 1. Run the quotation program：
-   * Double-click start.bat under the root path of the quotation program to run the quotation program, and a window will pop up. Please do not close it. You can view the take-order quotation and retrieve information in the window.
+   * Go to [releases](https://github.com/NEST-Protocol/NEST-oracle-V3-miner/releases) and download the lastest release NEST-oracle-V3-miner.zip file.
+   * Double-click start.bat under the root path of the quotation program (from the zip) to run the quotation program, and a window will pop up. Please do not close it. You can view the take-order quotation and retrieve information in the window.
 
 2. Log in：
    * Enter http://127.0.0.1:8088/offer/miningData in the browser, and you will enter the login page with the default user name `nest` and password `nest`.
