@@ -25,21 +25,6 @@ public interface Constant {
     BigInteger DEFAULT_BLOCK_LIMIT = new BigInteger("25");
 
     /**
-     * Number of ETH required for quotation (WEI)
-     */
-    BigInteger OFFER_ETH_AMOUNT = new BigInteger("10000000000000000000");
-
-    /**
-     * ETH number to be entered into the contract to complete the quoted transaction (WEI)
-     */
-    BigInteger PAYABLE_ETH_AMOUNT = new BigInteger("10100000000000000000");
-
-    /**
-     * Ether (ETH) quote
-     */
-    BigDecimal ETH_AMOUNT = new BigDecimal("10");
-
-    /**
      * Offer gasLimit
      */
     BigInteger OFFER_GAS_LIMIT = new BigInteger("600000");

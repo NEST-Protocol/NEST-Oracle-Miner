@@ -66,6 +66,21 @@ public class MiningServiceImpl implements MiningService {
     // Huocoin exchange trades pairs
     public static volatile String SYMBOLS;
 
+    /**
+     * Number of ETH required for quotation (WEI)
+     */
+    public static  BigInteger OFFER_ETH_AMOUNT = null;
+
+    /**
+     * ETH number to be entered into the contract to complete the quoted transaction (WEI)
+     */
+    public static BigInteger PAYABLE_ETH_AMOUNT = null;
+
+    /**
+     * Ether (ETH) quote
+     */
+    public static BigDecimal ETH_AMOUNT = null;
+
     // The private key
     private String USER_PRIVATE_KEY;
 
@@ -207,7 +222,7 @@ public class MiningServiceImpl implements MiningService {
         }
 
         LOG.info("Current account balance：ETH={}，{}={}", ethBalance, SYMBOL, erc20Balance);
-        if (ethBalance.compareTo(Constant.PAYABLE_ETH_AMOUNT) < 0 || erc20Balance.compareTo(OFFER_ERC20_AMOUNT) < 0) {
+        if (ethBalance.compareTo(PAYABLE_ETH_AMOUNT) < 0 || erc20Balance.compareTo(OFFER_ERC20_AMOUNT) < 0) {
             LOG.info("The balance of the account is insufficient, please check if there is any unretrieved contract !");
             return true;
         } else {
@@ -329,7 +344,7 @@ public class MiningServiceImpl implements MiningService {
             exchangePrice = BigDecimal.ONE.divide(exchangePrice, 18, BigDecimal.ROUND_DOWN);
         }
 
-        BigDecimal erc20Amount = MathUtil.decMulInt(exchangePrice, DECIMAL).multiply(Constant.ETH_AMOUNT);
+        BigDecimal erc20Amount = MathUtil.decMulInt(exchangePrice, DECIMAL).multiply(ETH_AMOUNT);
 
         // It is not allowed to exceed 20% with a price deviation
         if (OFFER_ERC20_AMOUNT != null) {
@@ -345,7 +360,7 @@ public class MiningServiceImpl implements MiningService {
         }
 
         OFFER_ERC20_AMOUNT = MathUtil.toBigInt(erc20Amount);
-        LOG.info("Update the price --> Quote required ETH quantity for ：" + Constant.OFFER_ETH_AMOUNT + "  {} number is:" + OFFER_ERC20_AMOUNT, SYMBOL);
+        LOG.info("Update the price --> Quote required ETH quantity for ：" + OFFER_ETH_AMOUNT + "  {} number is:" + OFFER_ERC20_AMOUNT, SYMBOL);
         return true;
     }
 
@@ -416,12 +431,12 @@ public class MiningServiceImpl implements MiningService {
         // Get the latest effective price in the current contract and compare it with the current prepared price. If the deviation is more than 10%, then quote 10 times
         BigDecimal otherMinerOfferPrice = checkPriceNow();
         // Current exchange prices
-        BigDecimal companyPrice = calPrice(OFFER_ERC20_AMOUNT, Constant.OFFER_ETH_AMOUNT);
+        BigDecimal companyPrice = calPrice(OFFER_ERC20_AMOUNT, OFFER_ETH_AMOUNT);
 
         // The quotation needs to be entered into the contract for the number of ETH
-        BigInteger payableEth = Constant.PAYABLE_ETH_AMOUNT;
+        BigInteger payableEth = PAYABLE_ETH_AMOUNT;
         // Quoted ETH quantity
-        BigInteger offerEthAmount = Constant.OFFER_ETH_AMOUNT;
+        BigInteger offerEthAmount = OFFER_ETH_AMOUNT;
         // Quoted ERC20 quantity
         BigInteger offerErc20Amount = OFFER_ERC20_AMOUNT;
 
@@ -429,7 +444,7 @@ public class MiningServiceImpl implements MiningService {
         BigDecimal offset = (otherMinerOfferPrice.subtract(companyPrice)).divide(companyPrice, 3, BigDecimal.ROUND_DOWN).abs();
         // If the deviation exceeds 10%, quote 10 times
         if (offset.compareTo(Constant.OFFER_PRICE_OFFERSET) > 0) {
-            offerEthAmount = Constant.OFFER_ETH_AMOUNT.multiply(BigInteger.TEN);
+            offerEthAmount = OFFER_ETH_AMOUNT.multiply(BigInteger.TEN);
             offerErc20Amount = OFFER_ERC20_AMOUNT.multiply(BigInteger.TEN);
             payableEth = offerEthAmount.add(offerEthAmount.divide(Constant.SERVICE_CHARGE_RATE));
         }

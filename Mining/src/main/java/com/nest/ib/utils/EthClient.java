@@ -84,7 +84,6 @@ public class EthClient {
         if (credentials == null) {
             return;
         }
-
         // Mapping contract address
         mappingContractAddress();
 
@@ -96,6 +95,11 @@ public class EthClient {
         if (!AddressEnum.USDT_TOKEN_CONTRACT_ADDRESS.getValue().equalsIgnoreCase(MiningServiceImpl.ERC20_TOKEN_ADDRESS)) {
             nTokenContract = ContractFactory.nTokenContract(credentials, web3j);
         }
+
+
+        // Initializes the least eth
+        if (!initLeastEth()) return;
+
 
         // Get ERC20 token information
         getErc20Info();
@@ -110,6 +114,26 @@ public class EthClient {
             LOG.error("ERC20 authorization for the quoted factory contract failed :{}", e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private boolean initLeastEth() {
+        BigInteger leastEth = null;
+        try {
+            leastEth = nest3OfferMain.checkleastEth().send();
+        } catch (Exception e) {
+            LOG.error("Failed to obtain leastEth, unable to quote, please restart：{}", e.getMessage());
+            return false;
+        }
+        if (leastEth == null) return false;
+
+        MiningServiceImpl.OFFER_ETH_AMOUNT = leastEth;
+
+        MiningServiceImpl.PAYABLE_ETH_AMOUNT = leastEth.add(leastEth.divide(Constant.SERVICE_CHARGE_RATE));
+
+        MiningServiceImpl.ETH_AMOUNT = MathUtil.intDivDec(leastEth, Constant.UNIT_ETH, 0);
+
+        LOG.info("The leastEth obtains the success：{} ETH", MiningServiceImpl.ETH_AMOUNT);
+        return true;
     }
 
     /**
