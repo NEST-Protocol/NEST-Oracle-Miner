@@ -118,21 +118,26 @@ public class EthClient {
 
     private boolean initLeastEth() {
         BigInteger leastEth = null;
+        BigInteger miningEth = null;
         try {
             leastEth = nest3OfferMain.checkleastEth().send();
+            miningEth = nest3OfferMain.checkMiningETH().send();
         } catch (Exception e) {
             LOG.error("Failed to obtain leastEth, unable to quote, please restart：{}", e.getMessage());
             return false;
         }
         if (leastEth == null) return false;
 
+        MiningServiceImpl.SERVICE_CHARGE_RATE = miningEth.multiply(BigInteger.TEN);
+
         MiningServiceImpl.OFFER_ETH_AMOUNT = leastEth;
 
-        MiningServiceImpl.PAYABLE_ETH_AMOUNT = leastEth.add(leastEth.divide(Constant.SERVICE_CHARGE_RATE));
+        MiningServiceImpl.PAYABLE_ETH_AMOUNT = leastEth.add(leastEth.multiply(MiningServiceImpl.SERVICE_CHARGE_RATE));
 
         MiningServiceImpl.ETH_AMOUNT = MathUtil.intDivDec(leastEth, Constant.UNIT_ETH, 0);
 
         LOG.info("The leastEth obtains the success：{} ETH", MiningServiceImpl.ETH_AMOUNT);
+        LOG.info("The Quotation commission ratio：{} ", MiningServiceImpl.SERVICE_CHARGE_RATE);
         return true;
     }
 

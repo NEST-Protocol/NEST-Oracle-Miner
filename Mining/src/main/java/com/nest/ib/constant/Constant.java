@@ -47,7 +47,7 @@ public interface Constant {
     /**
      * Quotation commission ratio: 1%
      */
-    BigInteger SERVICE_CHARGE_RATE = new BigInteger("100");
+    // BigInteger SERVICE_CHARGE_RATE = new BigInteger("100");
 
     /**
      * If the price offset exceeds 10%, the minimum quotation amount should be multiplied by 10
