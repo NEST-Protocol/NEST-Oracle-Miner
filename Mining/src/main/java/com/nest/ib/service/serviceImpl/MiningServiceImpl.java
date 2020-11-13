@@ -451,7 +451,7 @@ public class MiningServiceImpl implements MiningService {
         if (offset.compareTo(Constant.OFFER_PRICE_OFFERSET) > 0) {
             offerEthAmount = OFFER_ETH_AMOUNT.multiply(BigInteger.TEN);
             offerErc20Amount = OFFER_ERC20_AMOUNT.multiply(BigInteger.TEN);
-            payableEth = offerEthAmount.add(offerEthAmount.divide(SERVICE_CHARGE_RATE));
+            payableEth = offerEthAmount.add(offerEthAmount.multiply(SERVICE_CHARGE_RATE).divide(BigInteger.valueOf(1000)));
         }
         LOG.info("Quoted ETH quantity：{}  Quoted {} quantity：{}  Number of credits to contract ETH：{}", offerEthAmount, SYMBOL, offerErc20Amount, payableEth);
 
