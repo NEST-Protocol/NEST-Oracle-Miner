@@ -130,11 +130,16 @@ public class EthClient {
 
         if (miningEth == null) return false;
 
-        MiningServiceImpl.SERVICE_CHARGE_RATE = miningEth;
+
+        if (!AddressEnum.USDT_TOKEN_CONTRACT_ADDRESS.getValue().equalsIgnoreCase(MiningServiceImpl.ERC20_TOKEN_ADDRESS)) {
+            MiningServiceImpl.SERVICE_CHARGE_RATE = Constant.SERVICE_CHARGE_RATE;
+        }else {
+            MiningServiceImpl.SERVICE_CHARGE_RATE = miningEth;
+        }
 
         MiningServiceImpl.OFFER_ETH_AMOUNT = leastEth;
 
-        MiningServiceImpl.PAYABLE_ETH_AMOUNT = leastEth.add(leastEth.multiply(miningEth).divide(BigInteger.valueOf(1000)));
+        MiningServiceImpl.PAYABLE_ETH_AMOUNT = leastEth.add(leastEth.multiply(MiningServiceImpl.SERVICE_CHARGE_RATE).divide(BigInteger.valueOf(1000)));
 
         MiningServiceImpl.ETH_AMOUNT = MathUtil.intDivDec(leastEth, Constant.UNIT_ETH, 0);
 

@@ -45,9 +45,9 @@ public interface Constant {
     BigDecimal UNIT_ETH = new BigDecimal("1000000000000000000");
 
     /**
-     * Quotation commission ratio: 1%
+     * Ntoken Quotation commission ratio: 1%
      */
-    // BigInteger SERVICE_CHARGE_RATE = new BigInteger("100");
+    BigInteger SERVICE_CHARGE_RATE = new BigInteger("10");
 
     /**
      * If the price offset exceeds 10%, the minimum quotation amount should be multiplied by 10
